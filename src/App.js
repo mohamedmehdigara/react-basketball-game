@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import Basket from './components/Basket';
+import Ball from './components/Ball';
+import Score from './components/Score';
+
+const AppContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+`;
 
 function App() {
+  const [score, setScore] = useState(0);
+
+  const handleShoot = () => {
+    // Implement shooting logic here
+    // You can check if the ball goes through the hoop
+    // and update the score accordingly
+    // For a basic example, you can increment the score when the ball is clicked.
+    setScore(score + 1);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContainer>
+      <Basket />
+      <Ball onClick={handleShoot} />
+      <Score score={score} />
+    </AppContainer>
   );
 }
 
