@@ -5,6 +5,7 @@ import Ball from './components/Ball';
 import Score from './components/Score';
 import Timer from './components/Timer';
 import GameOver from './components/GameOver';
+import Obstacles from './components/Obstacles';
 
 const AppContainer = styled.div`
   display: flex;
@@ -24,7 +25,6 @@ function App() {
       // Implement shooting logic here
       // You can check if the ball goes through the hoop
       // and update the score accordingly
-      // For a basic example, you can increment the score when the ball is clicked.
       setScore(score + 1);
     }
   };
@@ -38,10 +38,15 @@ function App() {
     setGameOver(false);
   };
 
+  const handleCollision = () => {
+    setGameOver(true);
+  };
+
   return (
     <AppContainer>
-      <Basket onMove={setBasketPosition} onScore={() => setScore(score + 1)} /> {/* Pass onScore here */}
+      <Basket onMove={setBasketPosition} onScore={() => setScore(score + 1)} />
       <Ball onClick={handleShoot} />
+      <Obstacles onCollision={handleCollision} />
       <Score score={score} />
       <Timer initialTime={60} onTimeout={handleTimeout} />
       {gameOver && <GameOver score={score} onRestart={handleRestart} />}
