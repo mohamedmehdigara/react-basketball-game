@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Basket from './components/Basket';
 import Ball from './components/Ball';
 import Score from './components/Score';
-import Timer from './components/Timer'; // Update the import
-import GameOver from './components/GameOver'; // Update the import
+import Timer from './components/Timer';
+import GameOver from './components/GameOver';
 
 const AppContainer = styled.div`
   display: flex;
@@ -40,7 +40,7 @@ function App() {
 
   return (
     <AppContainer>
-      <Basket onMove={setBasketPosition} />
+      <Basket onMove={setBasketPosition} onScore={() => setScore(score + 1)} /> {/* Pass onScore here */}
       <Ball onClick={handleShoot} />
       <Score score={score} />
       <Timer initialTime={60} onTimeout={handleTimeout} />
