@@ -22,7 +22,7 @@ const BallContainer = styled.div`
   left: calc(50% - 10px);
   border-radius: 50%;
   cursor: pointer;
-  animation: ${bounce} 1s infinite;
+  animation: ${({ isAnimating }) => (isAnimating ? bounce : 'none')} 1s infinite;
 `;
 
 const SuccessfulShotText = styled.div`
@@ -44,28 +44,27 @@ const SuccessfulShotText = styled.div`
 `;
 
 const Ball = ({ onClick }) => {
+  const [isAnimating, setIsAnimating] = useState(false);
   const [shot, setShot] = useState(false);
 
   const handleShot = () => {
     if (!shot) {
-      setShot(true);
-      onClick();
+      setIsAnimating(true);
+      setTimeout(() => {
+        setIsAnimating(false);
+        setShot(true);
+        onClick();
+        setTimeout(() => {
+          setShot(false);
+        }, 1000); // Reset the shot state after 1 second
+      }, 600); // Adjust the timing for the ball to reach the basket
     }
   };
-
-  useEffect(() => {
-    if (shot) {
-      const resetShot = setTimeout(() => {
-        setShot(false);
-      }, 1000); // Reset the shot state after 1 second
-      return () => clearTimeout(resetShot);
-    }
-  }, [shot]);
 
   return (
     <div>
       {shot && <SuccessfulShotText>Score!</SuccessfulShotText>}
-      <BallContainer onClick={handleShot} />
+      <BallContainer isAnimating={isAnimating} onClick={handleShot} />
     </div>
   );
 };
