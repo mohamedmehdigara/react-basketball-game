@@ -14,6 +14,7 @@ const AppContainer = styled.div`
 
 function App() {
   const [score, setScore] = useState(0);
+  const [basketPosition, setBasketPosition] = useState(0);
 
   const handleShoot = () => {
     // Implement shooting logic here
@@ -25,7 +26,7 @@ function App() {
 
   return (
     <AppContainer>
-      <Basket />
+      <Basket onMove={setBasketPosition} />
       <Ball onClick={handleShoot} />
       <Score score={score} />
     </AppContainer>
