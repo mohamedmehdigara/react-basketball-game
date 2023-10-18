@@ -2,52 +2,33 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const BasketContainer = styled.div`
-  width: 200px;
-  height: 100px;
-  background-color: #333;
+  width: 150px;
+  height: 300px;
+  background: transparent;
   position: absolute;
-  top: 20px; /* Position at the top middle */
-  left: calc(50% - 100px);
+  top: 20px;
+  left: calc(50% - 75px);
   cursor: grab;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-  border: 2px solid #fff;
-  border-bottom: none;
-  overflow: hidden;
 `;
 
 const Hoop = styled.div`
-  width: 120px;
-  height: 40px;
-  background-color: transparent;
-  border: 2px solid #fff;
-  border-bottom: none;
-  border-top-left-radius: 60px;
-  border-top-right-radius: 60px;
-  position: absolute;
-  top: 30px;
-`;
-
-const Backboard = styled.div`
-  width: 20px;
-  height: 110px;
-  background-color: #333;
-  position: absolute;
-  top: 0;
-  left: 90px;
+  width: 100px;
+  height: 50px;
+  background-color: #fff;
+  border-radius: 50px;
+  position: relative;
+  top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Net = styled.div`
   width: 8px;
-  height: 45px;
+  height: 120px;
   background-color: #fff;
   position: absolute;
-  top: 30px;
-  left: 70px;
-  border-radius: 4px;
+  top: -120px;
 `;
 
 const Basket = ({ onMove }) => {
@@ -78,9 +59,9 @@ const Basket = ({ onMove }) => {
       onMouseMove={handleMouseMove}
       position={0} // You can pass the initial position as needed
     >
-      <Hoop />
-      <Backboard />
-      <Net />
+      <Hoop>
+        <Net />
+      </Hoop>
     </BasketContainer>
   );
 };
