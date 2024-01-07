@@ -6,6 +6,8 @@ import Score from './components/Score';
 import Timer from './components/Timer';
 import GameOver from './components/GameOver';
 import Obstacles from './components/Obstacles';
+import Instructions from './components/Instructions';
+
 
 const AppContainer = styled.div`
   display: flex;
@@ -19,6 +21,8 @@ function App() {
   const [score, setScore] = useState(0);
   const [basketPosition, setBasketPosition] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(true);
+
 
   const handleShoot = () => {
     if (!gameOver) {
@@ -42,14 +46,24 @@ function App() {
     setGameOver(true);
   };
 
+  const handleStartGame = () => {
+    setShowInstructions(false);
+    // Additional logic to start the game
+  };
+
   return (
     <AppContainer>
-      <Basket onMove={setBasketPosition} onScore={() => setScore(score + 1)} />
-      <Ball onClick={handleShoot} />
-      <Obstacles onCollision={handleCollision} />
-      <Score score={score} />
-      <Timer initialTime={60} onTimeout={handleTimeout} />
-      {gameOver && <GameOver score={score} onRestart={handleRestart} />}
+      {showInstructions ? (
+        <Instructions onStartGame={handleStartGame} />
+      ) : (
+        <>
+          <Basket onMove={setBasketPosition} onScore={() => setScore(score + 1)} />
+          <Ball onClick={handleShoot} />
+          <Score score={score} />
+          <Timer initialTime={60} onTimeout={handleTimeout} />
+          {gameOver && <GameOver score={score} onRestart={handleRestart} />}
+        </>
+      )}
     </AppContainer>
   );
 }
