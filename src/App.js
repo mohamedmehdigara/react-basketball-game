@@ -8,7 +8,7 @@ import GameOver from './components/GameOver';
 import Obstacles from './components/Obstacles';
 import Instructions from './components/Instructions';
 import PauseMenu from './components/PauseMenu';
-
+import LevelCompleted from './components/LevelCompleted';
 
 const AppContainer = styled.div`
   display: flex;
@@ -24,6 +24,8 @@ function App() {
   const [gameOver, setGameOver] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
+  const [showLevelCompleted, setShowLevelCompleted] = useState(false);
+
 
 
 
@@ -57,6 +59,16 @@ function App() {
   const handlePause = () => {
     setIsPaused(true);
   };
+
+  const handleLevelCompleted = () => {
+    setShowLevelCompleted(true);
+    // Additional logic for level completion
+  };
+
+  const handleNextLevel = () => {
+    setShowLevelCompleted(false);
+    // Additional logic to proceed to the next level
+  };
   
 
   return (
@@ -76,6 +88,9 @@ function App() {
             onRestart={handleRestart}
             onMainMenu={() => setShowInstructions(true)}
           />)}
+          {showLevelCompleted && (
+            <LevelCompleted score={score} onNextLevel={handleNextLevel} onMainMenu={() => setShowInstructions(true)} />
+          )}
         </>
       )}
     </AppContainer>
