@@ -27,7 +27,17 @@ const InstructionsListItem = styled.li`
   margin-bottom: 8px;
 `;
 
-const Instructions = () => {
+const StartGameButton = styled.button`
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+`;
+
+const Instructions = ({ onStartGame }) => {
   return (
     <InstructionsContainer>
       <InstructionsTitle>How to Play</InstructionsTitle>
@@ -46,9 +56,7 @@ const Instructions = () => {
         <InstructionsListItem>Complete levels and aim for the highest score!</InstructionsListItem>
       </InstructionsList>
 
-      <InstructionsText>
-        Have fun playing, and may you become the ultimate basketball champion!
-      </InstructionsText>
+      <StartGameButton onClick={onStartGame}>Start Game</StartGameButton>
     </InstructionsContainer>
   );
 };

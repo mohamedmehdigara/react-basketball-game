@@ -7,6 +7,7 @@ import Timer from './components/Timer';
 import GameOver from './components/GameOver';
 import Obstacles from './components/Obstacles';
 import Instructions from './components/Instructions';
+import PauseMenu from './components/PauseMenu';
 
 
 const AppContainer = styled.div`
@@ -22,6 +23,8 @@ function App() {
   const [basketPosition, setBasketPosition] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [showInstructions, setShowInstructions] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
+
 
 
   const handleShoot = () => {
@@ -51,6 +54,11 @@ function App() {
     // Additional logic to start the game
   };
 
+  const handlePause = () => {
+    setIsPaused(true);
+  };
+  
+
   return (
     <AppContainer>
       {showInstructions ? (
@@ -62,6 +70,12 @@ function App() {
           <Score score={score} />
           <Timer initialTime={60} onTimeout={handleTimeout} />
           {gameOver && <GameOver score={score} onRestart={handleRestart} />}
+          {isPaused && (
+          <PauseMenu
+            onResume={() => setIsPaused(false)}
+            onRestart={handleRestart}
+            onMainMenu={() => setShowInstructions(true)}
+          />)}
         </>
       )}
     </AppContainer>
