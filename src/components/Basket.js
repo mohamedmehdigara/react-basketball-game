@@ -21,6 +21,7 @@ const Hoop = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 5px solid #333; /* Added rim to the hoop */
 `;
 
 const Net = styled.div`
@@ -29,6 +30,16 @@ const Net = styled.div`
   background-color: #fff;
   position: absolute;
   top: -120px;
+`;
+
+const Rim = styled.div`
+  width: 120px;
+  height: 10px;
+  background-color: #333;
+  position: absolute;
+  top: 34px;
+  left: calc(50% - 60px);
+  border-radius: 5px;
 `;
 
 const Basket = ({ onMove }) => {
@@ -61,6 +72,7 @@ const Basket = ({ onMove }) => {
     >
       <Hoop>
         <Net />
+        <Rim />
       </Hoop>
     </BasketContainer>
   );

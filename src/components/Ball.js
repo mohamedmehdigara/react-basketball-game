@@ -3,13 +3,67 @@ import styled, { keyframes } from 'styled-components';
 
 const bounce = keyframes`
   0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
+    transform: translateY(0) rotate(0deg);
   }
   40% {
-    transform: translateY(-30px);
+    transform: translateY(-30px) rotate(360deg);
   }
   60% {
-    transform: translateY(-15px);
+    transform: translateY(-15px) rotate(180deg);
+  }
+  70% {
+    transform: translateY(-10px) rotate(360deg);
+  }
+  90% {
+    transform: translateY(-5px) rotate(180deg);
+  }
+`;
+
+const cometTrail = keyframes`
+  0%, 100% {
+    opacity: 0;
+  }
+  10%, 90% {
+    opacity: 0.8;
+  }
+  20%, 80% {
+    opacity: 0.6;
+  }
+  30%, 70% {
+    opacity: 0.4;
+  }
+  40%, 60% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0;
+  }
+`;
+
+const shadowGrow = keyframes`
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+`;
+
+const glow = keyframes`
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 165, 0, 0.8);
+  }
+`;
+
+const colorChange = keyframes`
+  0%, 100% {
+    background-color: orange;
+  }
+  50% {
+    background-color: red;
   }
 `;
 
@@ -18,11 +72,35 @@ const BallContainer = styled.div`
   height: 20px;
   background-color: orange;
   position: absolute;
-  bottom: ${({ isAnimating }) => (isAnimating ? '70px' : '40px')}; // Adjusted initial position
-  left: calc(50% - 10px);
+  bottom: ${({ isAnimating }) => (isAnimating ? '70px' : '40px')};
+  left: ${({ resetPosition }) => (resetPosition ? `${Math.random() * 80 + 10}%` : 'calc(50% - 10px)')};
   border-radius: 50%;
   cursor: pointer;
-  animation: ${({ isAnimating }) => (isAnimating ? bounce : 'none')} 0.6s ease-in-out; // Adjusted animation duration
+  animation: ${({ isAnimating }) => (isAnimating ? bounce : 'none')} 0.8s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  &:before {
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: rgba(255, 165, 0, 0.6);
+    border-radius: 50%;
+    top: -5px;
+    left: calc(50% - 2.5px);
+    animation: ${cometTrail} 0.8s ease-in-out infinite;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 165, 0, 0.2);
+    border-radius: 50%;
+    top: -2px;
+    left: -2px;
+    animation: ${({ isAnimating }) => (isAnimating ? glow : 'none')} 0.8s ease-in-out;
+  }
+  animation: ${({ isAnimating }) => (isAnimating ? colorChange : 'none')} 0.8s ease-in-out infinite;
 `;
 
 const SuccessfulShotText = styled.div`
@@ -46,6 +124,7 @@ const SuccessfulShotText = styled.div`
 const Ball = ({ onClick }) => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [shot, setShot] = useState(false);
+  const [resetPosition, setResetPosition] = useState(false);
 
   const handleShot = () => {
     if (!shot) {
@@ -54,17 +133,19 @@ const Ball = ({ onClick }) => {
         setIsAnimating(false);
         setShot(true);
         onClick();
+        setResetPosition(true);
         setTimeout(() => {
           setShot(false);
+          setResetPosition(false);
         }, 1000); // Reset the shot state after 1 second
-      }, 600); // Adjust the timing for the ball to reach the basket
+      }, 800); // Adjust the timing for the ball to reach the basket
     }
   };
 
   return (
     <div>
       {shot && <SuccessfulShotText>Score!</SuccessfulShotText>}
-      <BallContainer isAnimating={isAnimating} onClick={handleShot} />
+      <BallContainer isAnimating={isAnimating} resetPosition={resetPosition} onClick={handleShot} />
     </div>
   );
 };
