@@ -18,11 +18,11 @@ const BallContainer = styled.div`
   height: 20px;
   background-color: orange;
   position: absolute;
-  bottom: 40px;
+  bottom: ${({ isAnimating }) => (isAnimating ? '70px' : '40px')}; // Adjusted initial position
   left: calc(50% - 10px);
   border-radius: 50%;
   cursor: pointer;
-  animation: ${({ isAnimating }) => (isAnimating ? bounce : 'none')} 1s infinite;
+  animation: ${({ isAnimating }) => (isAnimating ? bounce : 'none')} 0.6s ease-in-out; // Adjusted animation duration
 `;
 
 const SuccessfulShotText = styled.div`

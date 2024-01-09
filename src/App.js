@@ -9,6 +9,7 @@ import Obstacles from './components/Obstacles';
 import Instructions from './components/Instructions';
 import PauseMenu from './components/PauseMenu';
 import LevelCompleted from './components/LevelCompleted';
+import PowerUp from './components/PowerUp';
 
 const AppContainer = styled.div`
   display: flex;
@@ -25,7 +26,9 @@ function App() {
   const [showInstructions, setShowInstructions] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [showLevelCompleted, setShowLevelCompleted] = useState(false);
-
+  const [activePowerUp, setActivePowerUp] = useState(null);
+  const [powerUpDuration, setPowerUpDuration] = useState(0);
+  
 
 
 
@@ -69,6 +72,22 @@ function App() {
     setShowLevelCompleted(false);
     // Additional logic to proceed to the next level
   };
+
+  const handlePowerUpActivation = (type, duration) => {
+    setActivePowerUp(type);
+    setPowerUpDuration(duration);
+  
+    // Additional logic for power-up activation
+  };
+
+  
+  const handlePowerUpDeactivation = () => {
+    setActivePowerUp(null);
+    setPowerUpDuration(0);
+  
+    // Additional logic for power-up deactivation
+  };
+  
   
 
   return (
@@ -91,6 +110,10 @@ function App() {
           {showLevelCompleted && (
             <LevelCompleted score={score} onNextLevel={handleNextLevel} onMainMenu={() => setShowInstructions(true)} />
           )}
+          {activePowerUp && (
+  <PowerUp type={activePowerUp} duration={powerUpDuration} />
+)}
+
         </>
       )}
     </AppContainer>
