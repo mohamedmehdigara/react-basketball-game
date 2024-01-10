@@ -10,6 +10,7 @@ import Instructions from './components/Instructions';
 import PauseMenu from './components/PauseMenu';
 import LevelCompleted from './components/LevelCompleted';
 import PowerUp from './components/PowerUp';
+import Stadium from './components/Stadium';
 
 const AppContainer = styled.div`
   display: flex;
@@ -113,9 +114,11 @@ function App() {
           {activePowerUp && (
   <PowerUp type={activePowerUp} duration={powerUpDuration} />
 )}
-
+<Obstacles/>
         </>
       )}
+            <Stadium />
+
     </AppContainer>
   );
 }

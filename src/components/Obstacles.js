@@ -14,15 +14,31 @@ const moveObstacle = keyframes`
   }
 `;
 
+const blink = keyframes`
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+`;
+
 const ObstacleContainer = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   background-color: red;
   position: absolute;
   bottom: 40px;
   left: 100%;
   border-radius: 50%;
-  animation: ${moveObstacle} 3s linear infinite;
+  animation: ${({ isDestroyed }) => (isDestroyed ? blink : moveObstacle)} 3s
+    ${({ isDestroyed }) => (isDestroyed ? 'infinite' : 'linear')};
+  cursor: ${({ isDestroyed }) => (isDestroyed ? 'not-allowed' : 'pointer')};
+  transition: opacity 0.3s ease-in-out;
+
+  &.destroyed {
+    animation: ${blink} 1s infinite;
+  }
 `;
 
 const Obstacles = ({ onCollision, onScore }) => {
